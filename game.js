@@ -44,6 +44,7 @@ document.addEventListener("keyup", function(event) {
     if (event.key === "ArrowRight" || event.key === "d") {
         right = false;
     }
+
 });
 
 
@@ -69,12 +70,16 @@ function game() {
 
 
     // Ground
+
     if (y >= 460) {
         y = 460;
         velocityY = 0;
         jumping = false;
     }
+
+
     // Keep inside screen
+
     if (x < 0) {
         x = 0;
     }
@@ -89,21 +94,27 @@ function game() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 
-    // Sky
+    // BLACK SKY
 
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, 800, 600);
-    // Ground
+
+
+    // WHITE GROUND
+
     ctx.fillStyle = "white";
     ctx.fillRect(0, 500, 800, 100);
-    // Blob
-    ctx.fillStyle = "hotpink";
+
+
+    // PINK BLOB
+
+    ctx.fillStyle = "pink";
 
     ctx.beginPath();
 
     ctx.arc(
-        x + 10,
-        y + 10,
+        x + 20,
+        y + 20,
         20,
         0,
         Math.PI * 2
