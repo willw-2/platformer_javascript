@@ -39,7 +39,7 @@ function update() {
     player.y += player.velocityY;
 
     // Jump
-    if (keys[" "] && player.y >= 460) {
+    if (keys["ArrowUp"] && player.y >= 460) {
         player.velocityY = jumpPower;
     }
 
