@@ -1,177 +1,118 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// ====================
-// PLAYER
-// ====================
+let x = 100;
+let y = 460;
 
-const player = {
-    x: 100,
-    y: 460,
-    size: 40,
-    color: "pink",
-    speed: 5,
-    velocityY: 0,
-    onGround: true
-};
+let speed = 5;
+let velocityY = 0;
 
-// ====================
-// PHYSICS
-// ====================
+let gravity = 0.5;
+let jump = -10;
 
-const gravity = 0.5;
-const jumpPower = -12;
+let left = false;
+let right = false;
+let jumping = false;
 
-// ====================
-// KEYBOARD
-// ====================
 
-const keys = {};
+// Keyboard
 
 document.addEventListener("keydown", function(event) {
 
-    keys[event.code] = true;
-
-    // Try to jump
-    if (
-        event.code === "Space" ||
-        event.code === "ArrowUp" ||
-        event.code === "KeyW"
-    ) {
-        jump();
-        event.preventDefault();
+    if (event.key === "ArrowLeft" || event.key === "a") {
+        left = true;
     }
+
+    if (event.key === "ArrowRight" || event.key === "d") {
+        right = true;
+    }
+
+    if (event.key === " " && !jumping) {
+        velocityY = jump;
+        jumping = true;
+    }
+
 });
+
 
 document.addEventListener("keyup", function(event) {
-    keys[event.code] = false;
+
+    if (event.key === "ArrowLeft" || event.key === "a") {
+        left = false;
+    }
+
+    if (event.key === "ArrowRight" || event.key === "d") {
+        right = false;
+    }
 });
 
-// ====================
-// JUMP FUNCTION
-// ====================
 
-function jump() {
+// Game loop
 
-    if (player.onGround) {
+function game() {
 
-        player.velocityY = jumpPower;
+    // Move left/right
 
-        player.onGround = false;
-
-    }
-}
-
-// ====================
-// CLICK TO JUMP
-// ====================
-
-canvas.addEventListener("click", function() {
-    jump();
-});
-
-// ====================
-// UPDATE
-// ====================
-
-function update() {
-
-    // Move left
-    if (keys["ArrowLeft"] || keys["KeyA"]) {
-        player.x -= player.speed;
+    if (left) {
+        x -= speed;
     }
 
-    // Move right
-    if (keys["ArrowRight"] || keys["KeyD"]) {
-        player.x += player.speed;
+    if (right) {
+        x += speed;
     }
 
-    // Keep player inside screen
-
-    if (player.x < 0) {
-        player.x = 0;
-    }
-
-    if (player.x + player.size > canvas.width) {
-        player.x = canvas.width - player.size;
-    }
 
     // Gravity
 
-    player.velocityY += gravity;
+    velocityY += gravity;
+    y += velocityY;
 
-    player.y += player.velocityY;
-
-    // Ground collision
-
-    const groundY = 500;
-
-    if (player.y + player.size >= groundY) {
-
-        player.y = groundY - player.size;
-
-        player.velocityY = 0;
-
-        player.onGround = true;
-    }
-}
-
-// ====================
-// DRAW
-// ====================
-
-function draw() {
-
-    // Background
-
-    ctx.fillStyle = "skyblue";
-
-    ctx.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
 
     // Ground
+    if (y >= 460) {
+        y = 460;
+        velocityY = 0;
+        jumping = false;
+    }
+    // Keep inside screen
+    if (x < 0) {
+        x = 0;
+    }
 
-    ctx.fillStyle = "green";
+    if (x > canvas.width - 40) {
+        x = canvas.width - 40;
+    }
 
-    ctx.fillRect(
-        0,
-        500,
-        canvas.width,
-        100
-    );
 
-    // Player
+    // Clear screen
 
-    ctx.fillStyle = player.color;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+    // Sky
+
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, 800, 600);
+    // Ground
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 500, 800, 100);
+    // Blob
+    ctx.fillStyle = "hotpink";
 
     ctx.beginPath();
 
     ctx.arc(
-        player.x + player.size / 2,
-        player.y + player.size / 2,
-        player.size / 2,
+        x + 10,
+        y + 10,
+        20,
         0,
         Math.PI * 2
     );
 
     ctx.fill();
+
+
+    requestAnimationFrame(game);
 }
 
-// ====================
-// GAME LOOP
-// ====================
-
-function gameLoop() {
-
-    update();
-
-    draw();
-
-    requestAnimationFrame(gameLoop);
-}
-
-gameLoop();
+game();
