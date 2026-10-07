@@ -108,7 +108,7 @@ function game() {
 
     // PINK BLOB
 
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "pink";
 
     ctx.beginPath();
 
