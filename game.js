@@ -96,19 +96,19 @@ function game() {
 
     // BLACK SKY
 
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "white";
     ctx.fillRect(0, 0, 800, 600);
 
 
     // WHITE GROUND
 
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "black";
     ctx.fillRect(0, 500, 800, 100);
 
 
     // PINK BLOB
 
-    ctx.fillStyle = "pink";
+    ctx.fillStyle = "black";
 
     ctx.beginPath();
 
