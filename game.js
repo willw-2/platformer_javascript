@@ -62,13 +62,13 @@ function game() {
     // Clear screen
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // BLACK SKY
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "grey";
     ctx.fillRect(0, 0, 800, 600);
     // WHITE GROUND
     ctx.fillStyle = "black";
     ctx.fillRect(0, 500, 800, 100);
     // PINK BLOB
-    ctx.fillStyle = "pink";
+    ctx.fillStyle = "smoke";
     ctx.beginPath();
     ctx.arc(
         x + 20,
