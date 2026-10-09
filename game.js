@@ -13,6 +13,7 @@ let jump = -10;
 let left = false;
 let right = false;
 let jumping = false;
+let playerAttackCooldown = 0;
 
 // Enemy object
 let enemy = {
@@ -44,6 +45,10 @@ document.addEventListener("keydown", function(event) {
         velocityY = jump;
         jumping = true;
     }
+    if ((event.key === "f" || event.key === "F" || event.key === "j" || event.key === "J") && playerAttackCooldown <= 0) {
+        performPlayerAttack();
+        playerAttackCooldown = 25;
+    }
 });
 
 document.addEventListener("keyup", function(event) {
@@ -55,13 +60,44 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
+canvas.addEventListener("click", function() {
+    if (playerAttackCooldown <= 0) {
+        performPlayerAttack();
+        playerAttackCooldown = 25;
+    }
+});
+
+function performPlayerAttack() {
+    if (gameOver || enemy.health <= 0) {
+        return;
+    }
+
+    const attackRange = 90;
+    const attackHeight = 60;
+    const enemyCenterX = enemy.x + enemy.width / 2;
+    const enemyCenterY = enemy.y + enemy.height / 2;
+    const playerCenterX = x + 20;
+    const playerCenterY = y + 20;
+
+    const dx = enemyCenterX - playerCenterX;
+    const dy = enemyCenterY - playerCenterY;
+
+    if (Math.abs(dx) <= attackRange && Math.abs(dy) <= attackHeight) {
+        enemy.health = Math.max(0, enemy.health - 25);
+    }
+}
+
 // Enemy AI
 function updateEnemy() {
-    // Move randomly
-    if (Math.random() > 0.98) {
-        enemy.moveDirection *= -1;
+    if (enemy.health <= 0) {
+        return;
     }
-    enemy.x += enemy.speed * enemy.moveDirection;
+
+    // Move toward the player when they're nearby
+    if (Math.abs(x - enemy.x) > 60) {
+        enemy.moveDirection = x > enemy.x ? 1 : -1;
+        enemy.x += enemy.speed * enemy.moveDirection;
+    }
 
     // Keep enemy in bounds
     if (enemy.x < 50) {
@@ -76,8 +112,15 @@ function updateEnemy() {
     // Attack pattern
     enemy.attackCooldown--;
     if (enemy.attackCooldown <= 0) {
-        attackPattern();
-        enemy.attackCooldown = 80; // Attack every 80 frames
+        const nearPlayer = Math.abs(x - enemy.x) < 90 && Math.abs(y - enemy.y) < 60;
+
+        if (nearPlayer) {
+            playerHealth = Math.max(0, playerHealth - 10);
+            enemy.attackCooldown = 90;
+        } else {
+            attackPattern();
+            enemy.attackCooldown = 80;
+        }
     }
 }
 
@@ -198,6 +241,10 @@ function game() {
     }
     if (x > canvas.width - 40) {
         x = canvas.width - 40;
+    }
+
+    if (playerAttackCooldown > 0) {
+        playerAttackCooldown--;
     }
 
     // Update game entities
