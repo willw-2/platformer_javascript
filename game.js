@@ -134,7 +134,7 @@ function updateEnemy() {
                 damage: 1
             });
         }
-        enemy.attackCooldown = 60;
+        enemy.attackCooldown = 80;
     }
 
     // Move toward the player when they're nearby
@@ -168,9 +168,9 @@ function updateEnemy() {
     }
 }
 
-// Different attack patterns like Sans
+// Different attack patterns
 function attackPattern() {
-    enemy.attackPattern = Math.floor(Math.random() * 3);
+    enemy.attackPattern = Math.floor(Math.random() * 2);
 
     if (enemy.attackPattern === 0) {
         // Straight bones toward player
@@ -199,20 +199,7 @@ function attackPattern() {
                 homingStrength: 0.50
             });
         }
-    } else {
-        // Circular pattern
-        for (let i = 0; i < 8; i++) {
-            let angle = (i / 8) * Math.PI * 2;
-            projectiles.push({
-                x: enemy.x + 20,
-                y: enemy.y + 20,
-                velocityX: Math.cos(angle) * 5,
-                velocityY: Math.sin(angle) * 5,
-                size: 30,
-                damage: 1
-            });
-        }
-    }
+    } 
 }
 
 // Update projectiles
