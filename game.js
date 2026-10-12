@@ -143,10 +143,10 @@ function updateEnemy() {
 
         if (nearPlayer) {
             playerHealth = Math.max(0, playerHealth - 10);
-            enemy.attackCooldown = 90;
+            enemy.attackCooldown = 40;
         } else {
             attackPattern();
-            enemy.attackCooldown = 80;
+            enemy.attackCooldown = 40;
         }
     }
 }
