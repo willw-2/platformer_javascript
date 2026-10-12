@@ -4,13 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My JavaScript Platformer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #333;
+        }
+        
+        h1 {
+            position: absolute;
+            top: 10px;
+            color: white;
+            font-size: 24px;
+        }
+        
+        #gameCanvas {
+            display: block;
+            max-width: 100vw;
+            max-height: 100vh;
+        }
+    </style>
 </head>
 
 <body>
 
     <h1>My Platformer</h1>
 
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <canvas id="gameCanvas"></canvas>
 
     <script src="game.js?v=1"></script>
 
