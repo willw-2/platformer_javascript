@@ -31,7 +31,7 @@ let enemy = {
 };
 
 let projectiles = [];
-let playerHealth = 100;
+let playerHealth = 1;
 let gameOver = false;
 
 function updateCanvasSize() {
@@ -179,7 +179,7 @@ function attackPattern() {
                 size: 10,
                 damage: 1,
                 homing: true,
-                homingStrength: 0.30
+                homingStrength: 0.50
             });
         }
     } else {
@@ -191,7 +191,7 @@ function attackPattern() {
                 y: enemy.y + 20,
                 velocityX: Math.cos(angle) * 5,
                 velocityY: Math.sin(angle) * 5,
-                size: 10,
+                size: 30,
                 damage: 1
             });
         }
