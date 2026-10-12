@@ -18,7 +18,7 @@ let playerAttackCooldown = 0;
 // Enemy object
 let enemy = {
     x: 600,
-    y: 300,
+    y: 100,
     width: 40,
     height: 40,
     health: 100,
