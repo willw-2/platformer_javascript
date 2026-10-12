@@ -1,6 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+let groundY = 0;
 let x = 100;
 let y = 460;
 
@@ -17,8 +18,8 @@ let playerAttackCooldown = 0;
 
 // Enemy object
 let enemy = {
-    x: canvas.width * 0.72,
-    y: canvas.height * 0.18,
+    x: 0,
+    y: 0,
     width: 40,
     height: 40,
     health: 100,
@@ -30,22 +31,33 @@ let enemy = {
 };
 
 let projectiles = [];
-let playerHealth = 1;
+let playerHealth = 100;
 let gameOver = false;
 
-// canvas size
-window.addEventListener("resize, () => {
-    updateCanvasSize();
-    groundY = canvas.height* 0.83;
-    if (x > canvas.width -40) {
+function updateCanvasSize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight * 0.666;
+    groundY = canvas.height * 0.83;
+
+    enemy.x = canvas.width * 0.72;
+    enemy.y = canvas.height * 0.18;
+
+    if (x > canvas.width - 40) {
         x = canvas.width - 40;
     }
-    if (y> groundY) {
+    if (y > groundY) {
         y = groundY;
     }
-    if (enemy.x > canvas.width - 90) { 
+    if (enemy.x > canvas.width - 90) {
         enemy.x = canvas.width - 90;
     }
+}
+
+updateCanvasSize();
+
+// canvas size
+window.addEventListener("resize", () => {
+    updateCanvasSize();
 });
 
 //Keyboard
@@ -244,8 +256,8 @@ function game() {
     y += velocityY;
 
     // Ground
-    if (y >= 460) {
-        y = 460;
+    if (y >= groundY) {
+        y = groundY;
         velocityY = 0;
         jumping = false;
     }
