@@ -119,6 +119,23 @@ function updateEnemy() {
     if (enemy.health <= 0) {
         return;
     }
+      // Always shoot circles on 40 frame cooldown
+    enemy.attackCooldown--;
+    if (enemy.attackCooldown <= 0) {
+        // Always shoot the circular pattern
+        for (let i = 0; i < 8; i++) {
+            let angle = (i / 8) * Math.PI * 2;
+            projectiles.push({
+                x: enemy.x + 20,
+                y: enemy.y + 20,
+                velocityX: Math.cos(angle) * 5,
+                velocityY: Math.sin(angle) * 5,
+                size: 30,
+                damage: 1
+            });
+        }
+        enemy.attackCooldown = 40;
+    }
 
     // Move toward the player when they're nearby
     if (Math.abs(x - enemy.x) > 60) {
