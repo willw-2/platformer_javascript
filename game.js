@@ -17,8 +17,8 @@ let playerAttackCooldown = 0;
 
 // Enemy object
 let enemy = {
-    x: 600,
-    y: 100,
+    x: canvas.width * 0.72,
+    y: canvas.height * 0.18,
     width: 40,
     height: 40,
     health: 100,
@@ -33,7 +33,22 @@ let projectiles = [];
 let playerHealth = 1;
 let gameOver = false;
 
-// Keyboard
+// canvas size
+window.addEventListener("resize, () => {
+    updateCanvasSize();
+    groundY = canvas.height* 0.83;
+    if (x > canvas.width -40) {
+        x = canvas.width - 40;
+    }
+    if (y> groundY) {
+        y = groundY;
+    }
+    if (enemy.x > canvas.width - 90) { 
+        enemy.x = canvas.width - 90;
+    }
+});
+
+//Keyboard
 document.addEventListener("keydown", function(event) {
     if (event.key === "ArrowLeft" || event.key === "a") {
         left = true;
@@ -266,11 +281,11 @@ function game() {
 
     // Sky
     ctx.fillStyle = "grey";
-    ctx.fillRect(0, 0, 800, 600);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Ground
     ctx.fillStyle = "black";
-    ctx.fillRect(0, 500, 800, 100);
+    ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
 
     // Draw player (pink blob)
     ctx.fillStyle = "black";
