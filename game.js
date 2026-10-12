@@ -134,7 +134,7 @@ function updateEnemy() {
                 damage: 1
             });
         }
-        enemy.attackCooldown = 40;
+        enemy.attackCooldown = 60;
     }
 
     // Move toward the player when they're nearby
