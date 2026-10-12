@@ -136,8 +136,8 @@ function attackPattern() {
                 y: enemy.y + 20,
                 velocityX: (Math.random() - 0.5) * 8,
                 velocityY: 6 + Math.random() * 3,
-                size: 8,
-                damage: 10
+                size: 10,
+                damage: 1
             });
         }
     } else if (enemy.attackPattern === 1) {
@@ -150,9 +150,9 @@ function attackPattern() {
                 velocityX: Math.cos(angle + (i - 1) * 0.3) * 5,
                 velocityY: Math.sin(angle + (i - 1) * 0.3) * 5,
                 size: 10,
-                damage: 15,
+                damage: 1,
                 homing: true,
-                homingStrength: 0.15
+                homingStrength: 0.30
             });
         }
     } else {
@@ -164,8 +164,8 @@ function attackPattern() {
                 y: enemy.y + 20,
                 velocityX: Math.cos(angle) * 5,
                 velocityY: Math.sin(angle) * 5,
-                size: 6,
-                damage: 8
+                size: 10,
+                damage: 1
             });
         }
     }
@@ -273,13 +273,13 @@ function game() {
     ctx.fillRect(0, 500, 800, 100);
 
     // Draw player (pink blob)
-    ctx.fillStyle = "pink";
+    ctx.fillStyle = "black";
     ctx.beginPath();
     ctx.arc(x + 20, y + 20, 20, 0, Math.PI * 2);
     ctx.fill();
 
     // Draw enemy (red skull)
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "grey";
     ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
     ctx.fillStyle = "white";
     ctx.fillRect(enemy.x + 8, enemy.y + 8, 8, 8);
@@ -287,7 +287,7 @@ function game() {
 
     // Draw projectiles (bones)
     projectiles.forEach(proj => {
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = "black";
         ctx.fillRect(proj.x - proj.size / 2, proj.y - proj.size / 2, proj.size, proj.size);
     });
 
