@@ -30,7 +30,7 @@ let enemy = {
 };
 
 let projectiles = [];
-let playerHealth = 100;
+let playerHealth = 1;
 let gameOver = false;
 
 // Keyboard
